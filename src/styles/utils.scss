@@ -1,0 +1,20 @@
+$break-sm: 450px;
+$break-lg: 1024px;
+
+@mixin respond-to-sm {
+    @media only screen and (max-width: $break-sm) {
+        @content;
+    }
+}
+
+@mixin respond-to-md {
+    @media only screen and (min-width: $break-sm + 1) and (max-width: $break-lg - 1) {
+        @content;
+    }
+}
+
+@mixin respond-to-lg {
+    @media only screen and (min-width: $break-lg) {
+        @content;
+    }
+}
