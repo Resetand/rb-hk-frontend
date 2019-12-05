@@ -1,0 +1,14 @@
+.Header {
+    & nav {
+        width: 20%;
+        padding: 20px 0;
+    }
+
+    & nav ul {
+        &:first-child {
+            margin-left: -15px !important;
+        }
+        display: flex;
+        align-items: center;
+    }
+}
