@@ -2,19 +2,31 @@ import * as React from 'react';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import './Header.scss';
+import Title from 'antd/lib/typography/Title';
+import block from 'bem-cn';
+
+const b = block('Header');
 
 const Header: React.FC = () => {
     return (
         <div className="container">
-            <div className="Header">
-                <nav>
-                    <ul>
-                        <li>
+            <div className={b()}>
+                <nav className={b('nav')}>
+                    <Link to={'/'}>
+                        <div className={b('logo')}>
+                            <span className="logo" />
+                            <Title className={b('logo-title').toString()} level={4}>
+                                RB Money
+                            </Title>
+                        </div>
+                    </Link>
+                    <ul className={b('menu')}>
+                        <li className={b('menu-item')}>
                             <Button type="link">
                                 <Link to="/">Home</Link>
                             </Button>
                         </li>
-                        <li>
+                        <li className={b('menu-item')}>
                             <Button type="link">
                                 <Link to="/about">About</Link>
                             </Button>

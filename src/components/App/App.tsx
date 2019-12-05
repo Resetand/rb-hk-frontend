@@ -17,7 +17,11 @@ const App: React.FC = () => {
                                 status="warning"
                                 title={<Title level={1}>About</Title>}
                                 subTitle={'Page not ready yet to'}
-                                extra={[<Button type="primary">Click me</Button>]}
+                                extra={[
+                                    <Button key="1" type="primary">
+                                        Click me
+                                    </Button>,
+                                ]}
                             />
                         </div>
                     </Route>
@@ -28,7 +32,11 @@ const App: React.FC = () => {
                                 status="warning"
                                 title={<Title level={1}>Home</Title>}
                                 subTitle={'Page not ready yet'}
-                                extra={[<Button type="primary">Click me</Button>]}
+                                extra={[
+                                    <Button key="1" type="primary">
+                                        Click me
+                                    </Button>,
+                                ]}
                             />
                         </div>
                     </Route>
