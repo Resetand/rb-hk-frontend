@@ -1,0 +1,13 @@
+.ClientsListPage {
+    margin-top: 3%;
+    margin-bottom: 10%;
+    & .ant-pagination {
+        margin-top: 50px !important;
+    }
+    &__head {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

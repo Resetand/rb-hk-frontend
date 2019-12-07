@@ -1,5 +1,14 @@
-// import request from './utils';
+import { Client, ClientDesc } from '../models/client';
+import { Strategy } from '../models/strategy';
+import request from './utils';
 
-// export const fetchCourses = async () => request.get<Course[]>('/courses').then(({ data }) => data);
+export const fetchClients = async () =>
+    request.get<ClientDesc[]>('/clients').then(({ data }) => data);
 
-export const a = 2;
+export const createStrategy = async (strategyCreation: Strategy) =>
+    request.post('/strategies', strategyCreation);
+
+export const fetchStrategies = async () =>
+    request.get<Strategy[]>('/strategies').then(({ data }) => data);
+
+export const fetchClient = async (id: string) => request.get<Client>(`/client/${id}`);

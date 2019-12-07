@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button } from 'antd';
+import { Button, Divider } from 'antd';
 import { Link } from 'react-router-dom';
 import './Header.scss';
 import Title from 'antd/lib/typography/Title';
@@ -16,7 +16,7 @@ const Header: React.FC = () => {
                         <div className={b('logo')}>
                             <span className="logo" />
                             <Title className={b('logo-title').toString()} level={4}>
-                                RB Money
+                                RB Bonus
                             </Title>
                         </div>
                     </Link>
@@ -28,7 +28,7 @@ const Header: React.FC = () => {
                         </li>
                         <li className={b('menu-item')}>
                             <Button type="link">
-                                <Link to="/about">About</Link>
+                                <Link to="/strategies">Strategies</Link>
                             </Button>
                         </li>
                     </ul>
