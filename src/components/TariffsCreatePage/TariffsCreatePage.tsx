@@ -34,7 +34,7 @@ const TariffsCreatePage: React.FC = () => {
                     onBack={() => history.push('/tariffs')}
                     title={'Создание тарифа'}
                 >
-                    <Paragraph style={{ maxWidth: '90%' }}>Тариф - это ...</Paragraph>
+                    <Paragraph style={{ maxWidth: '90%' }}>Тариф - это список стратегий (правил подсчёта бонусов) для конкретного пользователя.</Paragraph>
                 </PageHeader>
 
                 <div className="">
