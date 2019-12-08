@@ -5,6 +5,7 @@ export interface Client {
     firstName: string;
     lastName: string;
     tariffPlan: TariffPlan;
+    bonusCount?: number;
 }
 
 interface InstantStrategyType {

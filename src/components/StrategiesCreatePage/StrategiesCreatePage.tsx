@@ -1,12 +1,12 @@
+import { PageHeader } from 'antd';
+import Paragraph from 'antd/lib/typography/Paragraph';
 import { block } from 'bem-cn';
 import * as React from 'react';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import AggregateStrategiesCreateForm from '../StrategiesCreateForm/AggregateStrategiesCreateForm';
+import InstantStrategiesCreateForm from '../StrategiesCreateForm/InstantStrategiesCreateForm';
 import './StrategiesCreatePage.scss';
 
-import { PageHeader, Result, Button } from 'antd';
-import { useHistory, Route, Redirect, Switch } from 'react-router-dom';
-import Paragraph from 'antd/lib/typography/Paragraph';
-import InstantStrategiesCreateForm from '../StrategiesCreateForm/InstantStrategiesCreateForm';
-import AggregateStrategiesCreateForm from '../StrategiesCreateForm/AggregateStrategiesCreateForm';
 const b = block('StrategiesCreatePage');
 
 const StrategiesCreatePage: React.FC = () => {
@@ -36,34 +36,6 @@ const StrategiesCreatePage: React.FC = () => {
                 </PageHeader>
 
                 <Switch>
-                    <Route exact path={'success'}>
-                        <Result
-                            status={'success'}
-                            title="Стратегия успешно создана!"
-                            extra={[
-                                <Button type="primary" key="list">
-                                    К списку
-                                </Button>,
-                                <Button onClick={() => history.goBack()} key="create">
-                                    Создать стратегию
-                                </Button>,
-                            ]}
-                        />
-                    </Route>
-                    <Route exact path={'/strategies/create/error'}>
-                        <Result
-                            status={'error'}
-                            title="Что-то пошло не так!"
-                            extra={[
-                                <Button onClick={() => history.goBack()} type="primary" key="list">
-                                    Попробовать еще раз
-                                </Button>,
-                                <Button onClick={() => history.push('/')} key="create">
-                                    На главную
-                                </Button>,
-                            ]}
-                        />
-                    </Route>
                     <Route path={'/strategies/create/instant'}>
                         <InstantStrategiesCreateForm />
                     </Route>

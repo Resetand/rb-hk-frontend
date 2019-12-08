@@ -1,10 +1,9 @@
-import { PageHeader, DatePicker, Input, Form } from 'antd';
+import { DatePicker, Form, Input, PageHeader } from 'antd';
 import Paragraph from 'antd/lib/typography/Paragraph';
 import { block } from 'bem-cn';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import './TariffsCreatePage.scss';
-import moment from 'moment';
 
 const b = block('TariffsCreatePage');
 
@@ -12,7 +11,7 @@ const TariffsCreatePage: React.FC = () => {
     const history = useHistory();
     const onSubmit: React.FormEventHandler = () => {};
     const [title, setTitle] = React.useState('');
-    const [enableToDate, setEnableToDate] = React.useState(false);
+    // const [enableToDate, setEnableToDate] = React.useState(false);
     const [fromDate, setFromDate] = React.useState();
     const formItemLayout = {
         labelCol: {

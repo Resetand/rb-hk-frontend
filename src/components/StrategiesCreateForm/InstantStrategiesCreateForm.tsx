@@ -30,7 +30,7 @@ const StrategiesCreateForm: React.FC<FormProps> = ({ form }) => {
                         type: StrategyType.INSTANT,
                         title: values.title,
                         settings: {
-                            intervals,
+                            intervals: intervals.map(i => ({ ...i, key: undefined })),
                             mcc_list: mссList,
                             max_bonus: values.max,
                             min_bonus: values.min,

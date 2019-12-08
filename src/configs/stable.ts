@@ -2,7 +2,7 @@ import { OverrideConfig } from '.';
 
 const stableConfig: OverrideConfig = {
     api: {
-        url: 'https://82b568bf.ngrok.io',
+        url: 'http://41b2cf60.ngrok.io',
     },
 };
 

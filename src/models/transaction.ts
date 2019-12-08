@@ -4,6 +4,7 @@ export interface Transaction {
     amount: number;
     currency: Currency.RUB;
     mcc: number;
+    time: string;
 }
 
 export enum Currency {

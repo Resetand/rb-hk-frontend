@@ -40,7 +40,7 @@ const ClientsListPage: React.FC = () => {
         },
         {
             title: 'Количество бонусов',
-            render: () => Math.floor(Math.random() * 100),
+            render: (_, { bonusCount }) => bonusCount,
         },
         {
             title: 'Тарифный план',

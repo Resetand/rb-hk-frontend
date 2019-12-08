@@ -1,22 +1,22 @@
+import { Avatar, Button, Divider, Icon, Result, Select, Spin, Table, Tag } from 'antd';
+import { ColumnProps } from 'antd/lib/table';
+import Title from 'antd/lib/typography/Title';
 import { block } from 'bem-cn';
+import { upperFirst } from 'lodash';
+import moment from 'moment';
 import * as React from 'react';
-import './ClientPage.scss';
-import { Avatar, Spin, Result, Tag, Divider, Table, Select, Button, Icon } from 'antd';
+import { useParams } from 'react-router';
 import {
+    bindClientWithTariff,
     fetchClient,
     fetchClientBonuses,
     fetchTariffs,
-    bindClientWithTariff,
 } from '../../api/routes';
-import { useParams } from 'react-router';
-import { Client } from '../../models/client';
-import Title from 'antd/lib/typography/Title';
-import { upperFirst } from 'lodash';
 import { Bonus } from '../../models/bonus';
-import { ColumnProps } from 'antd/lib/table';
-import { TariffPlan } from '../../models/tariffPlan';
-import moment from 'moment';
+import { Client } from '../../models/client';
 import { StrategyType } from '../../models/strategy';
+import { TariffPlan } from '../../models/tariffPlan';
+import './ClientPage.scss';
 const b = block('ClientPage');
 
 const ClientPage: React.FC = () => {
@@ -84,7 +84,7 @@ const ClientPage: React.FC = () => {
     const bonusesTableColumn: ColumnProps<Bonus>[] = [
         {
             title: 'Тип',
-            width: 5,
+            width: 70,
             render: (_, { strategy }) => (
                 <Icon
                     style={{ width: 20, marginRight: 25 }}
@@ -103,12 +103,26 @@ const ClientPage: React.FC = () => {
         {
             title: 'Сумма',
             render: (_, { transactions }) => (
-                <span style={{ color: 'green' }}>+ {JSON.stringify(transactions)}</span>
+                <span style={{ color: 'green' }}>
+                    + {transactions.reduce((acc, cur) => cur.amount + acc, 0)}
+                </span>
             ),
         },
         {
-            title: 'Дата',
+            title: 'Валюта',
+            render: (_, { transactions }) => transactions[0].currency,
+        },
+        {
+            title: 'Стратегия вычисления',
+            render: (_, { strategy }) => strategy.title,
+        },
+        {
+            title: 'Дата начисления',
             render: (_, { createTime }) => moment(createTime).calendar(),
+        },
+        {
+            title: 'Дата тразакции',
+            render: (_, { transactions }) => moment(new Date(transactions[0].time)).calendar(),
         },
     ];
 

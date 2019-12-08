@@ -4,7 +4,13 @@ import request from './utils';
 import { Bonus } from '../models/bonus';
 import { TariffPlan } from '../models/tariffPlan';
 
-export const fetchClients = async () => request.get<Client[]>('/clients').then(({ data }) => data);
+export const fetchClients = async () =>
+    request
+        .get('/clients/aggregates')
+        .then(({ data }) => Object.values(data))
+        .then<Client[]>(data =>
+            data.map((item: any) => ({ ...item.client, bonusCount: item.bonusCount })),
+        );
 
 export const createStrategy = async (strategyCreation: Strategy) =>
     request.post('/strategies', {

@@ -1,4 +1,4 @@
-import { Transaction } from './transation';
+import { Transaction } from './transaction';
 import { Strategy } from './strategy';
 
 export interface Bonus {

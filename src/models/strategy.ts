@@ -1,7 +1,7 @@
 export interface Strategy {
     type: StrategyType;
     title: string;
-    settings: InstantStrategy;
+    settings: InstantStrategy | AggregateStrategy;
 }
 
 export interface InstantStrategy {
@@ -34,15 +34,19 @@ export interface AggregateStrategy {
 
 export enum AggregateFunction {
     SUM = 'SUM',
+    COUNT = 'COUNT',
 }
 
 export enum TimeUnit {
     DAYS = 'DAYS',
+    MINUTES = 'MINUTES',
+    HOURS = 'HOURS',
+    WEEKS = 'WEEKS',
 }
 
 export interface AggregateTimeSettings {
-    fromTime: Date;
-    toTime: Date;
-    timeUnit: TimeUnit;
+    from_time: Date;
+    to_time: Date;
+    time_unit: TimeUnit;
     quantity: number;
 }
