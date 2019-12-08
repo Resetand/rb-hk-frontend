@@ -1,14 +1,22 @@
 import { block } from 'bem-cn';
 import * as React from 'react';
 import './ClientPage.scss';
-import { Avatar, Spin, Result, Tag, Divider, Table } from 'antd';
-import { fetchClient, fetchClientBonuses } from '../../api/routes';
+import { Avatar, Spin, Result, Tag, Divider, Table, Select, Button, Icon } from 'antd';
+import {
+    fetchClient,
+    fetchClientBonuses,
+    fetchTariffs,
+    bindClientWithTariff,
+} from '../../api/routes';
 import { useParams } from 'react-router';
 import { Client } from '../../models/client';
 import Title from 'antd/lib/typography/Title';
 import { upperFirst } from 'lodash';
 import { Bonus } from '../../models/bonus';
 import { ColumnProps } from 'antd/lib/table';
+import { TariffPlan } from '../../models/tariffPlan';
+import moment from 'moment';
+import { StrategyType } from '../../models/strategy';
 const b = block('ClientPage');
 
 const ClientPage: React.FC = () => {
@@ -18,14 +26,35 @@ const ClientPage: React.FC = () => {
     const [client, setClient] = React.useState<Client>();
     const [bonuses, setBonuses] = React.useState<Bonus[]>();
 
+    const [tariffs, setTariffs] = React.useState<TariffPlan[]>([]);
+    const [newTariff, setNewTariff] = React.useState<TariffPlan>();
+    const [showSaveTariffButton, setShowSaveTariffButton] = React.useState(false);
+
     React.useEffect(() => void preFetchData(), [id]);
+    React.useEffect(() => {
+        if (newTariff) {
+            setShowSaveTariffButton(true);
+        }
+    }, [newTariff]);
 
     if (!id || typeof id !== 'string') {
         return <Result status={'500'} title={'Something goes wrong'} />;
     }
+
+    const saveNewTariff = async () => {
+        const confirmed = window.confirm('Вы уверены? ');
+        if (newTariff && client && confirmed) {
+            await bindClientWithTariff(client.uuid, newTariff.uuid);
+            window.location.reload();
+        }
+    };
     const fetchClientInfo = async () => {
         const res = await fetchClientBonuses(id);
         setBonuses(res);
+    };
+    const fetchTariffsList = async () => {
+        const res = await fetchTariffs();
+        setTariffs(res);
     };
 
     const fetchBonuses = async () => {
@@ -35,11 +64,11 @@ const ClientPage: React.FC = () => {
 
     const preFetchData = async () => {
         setLoading(true);
-        await Promise.all([fetchClientInfo(), fetchBonuses()]);
+        await Promise.all([fetchClientInfo(), fetchBonuses(), fetchTariffsList()]);
         setLoading(false);
     };
 
-    if (loading || !client || !bonuses) {
+    if (loading || !client || !bonuses || !tariffs) {
         return (
             <div className={b('loading')}>
                 <Spin />
@@ -54,12 +83,32 @@ const ClientPage: React.FC = () => {
 
     const bonusesTableColumn: ColumnProps<Bonus>[] = [
         {
-            title: 'Amount',
-            dataIndex: 'amount',
+            title: 'Тип',
+            width: 5,
+            render: (_, { strategy }) => (
+                <Icon
+                    style={{ width: 20, marginRight: 25 }}
+                    type={
+                        strategy && strategy.type === StrategyType.AGGREGATE_DATE
+                            ? 'schedule'
+                            : 'thunderbolt'
+                    }
+                />
+            ),
         },
         {
-            title: 'Date',
-            dataIndex: 'create_time',
+            title: 'Количество бонусов',
+            render: (_, { amount }) => <span style={{ color: 'green' }}>+ {amount}</span>,
+        },
+        {
+            title: 'Сумма',
+            render: (_, { transactions }) => (
+                <span style={{ color: 'green' }}>+ {JSON.stringify(transactions)}</span>
+            ),
+        },
+        {
+            title: 'Дата',
+            render: (_, { createTime }) => moment(createTime).calendar(),
         },
     ];
 
@@ -76,6 +125,33 @@ const ClientPage: React.FC = () => {
                     <Tag style={{ fontWeight: 'bold', padding: '3px 10px', cursor: 'pointer' }}>
                         {client.tariffPlan.title}
                     </Tag>
+                </div>
+                <div className="">
+                    <Select
+                        showSearch
+                        style={{ minWidth: 320, marginTop: 50, marginRight: 40 }}
+                        placeholder="Выбрать тариф"
+                        optionFilterProp="children"
+                        onChange={(id: string) =>
+                            setNewTariff(tariffs.filter(x => x.uuid === id)[0])
+                        }
+                        filterOption={(input, option) =>
+                            String(option!.props!.children!)
+                                .toLowerCase()
+                                .indexOf(input.toLowerCase()) >= 0
+                        }
+                    >
+                        {tariffs.map(tariff => (
+                            <Select.Option value={tariff.uuid} key={tariff.uuid}>
+                                {tariff.title}
+                            </Select.Option>
+                        ))}
+                    </Select>
+                    {showSaveTariffButton && (
+                        <Button type={'dashed'} onClick={saveNewTariff}>
+                            Сохранить изменения
+                        </Button>
+                    )}
                 </div>
                 <Divider />
                 <br />

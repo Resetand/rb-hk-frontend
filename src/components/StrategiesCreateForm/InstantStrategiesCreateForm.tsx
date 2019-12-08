@@ -3,43 +3,49 @@ import { FormComponentProps } from 'antd/lib/form';
 import { block } from 'bem-cn';
 import * as React from 'react';
 import './InstantStrategiesCreateForm.scss';
-import { InstantAmountInterval, StrategyType } from '../../models/strategy';
+import { IntervalSettings, StrategyType } from '../../models/strategy';
 import Title from 'antd/lib/typography/Title';
 import { createStrategy } from '../../api/routes';
-const b = block('StrategiesCreateForm');
+import { useHistory } from 'react-router';
+const b = block('InstantStrategiesCreateForm');
 
 interface FormProps extends FormComponentProps {}
 
-interface AmountInterval extends InstantAmountInterval {
+interface AmountInterval extends IntervalSettings {
     key: number;
 }
 
 let id = 0;
 
 const StrategiesCreateForm: React.FC<FormProps> = ({ form }) => {
+    const history = useHistory();
     const handleSubmit: React.FormEventHandler = e => {
         e.preventDefault();
 
-        form.validateFields(err => {
+        form.validateFields(async err => {
             if (!err) {
                 const values = form.getFieldsValue();
-                createStrategy({
-                    type: StrategyType.INSTANT,
-                    title: values.title,
-                    settings: {
-                        intervals,
-                        mссList,
-                        maxBonus: values.max,
-                        minBonus: values.min,
-                    },
-                });
+                try {
+                    await createStrategy({
+                        type: StrategyType.INSTANT,
+                        title: values.title,
+                        settings: {
+                            intervals,
+                            mcc_list: mссList,
+                            max_bonus: values.max,
+                            min_bonus: values.min,
+                        },
+                    });
+                    history.push('/strategies/create/success');
+                } catch (error) {
+                    history.push('/strategies/create/error');
+                }
             }
         });
     };
 
     const [mссList, setMссList] = React.useState<string[]>([]);
     const [intervals, setIntervals] = React.useState<AmountInterval[]>([{ key: 0 }]);
-    const [enableMссList, setEnableMссList] = React.useState(false);
 
     const formItemLayout = {
         labelCol: {
@@ -57,24 +63,15 @@ const StrategiesCreateForm: React.FC<FormProps> = ({ form }) => {
     };
 
     const addMсс = () => {
-        const Mсс = form.getFieldValue('Mсс') as any;
-        if (/\d{4}/.test(Mсс)) setMссList(prev => [...prev, Mсс]);
+        const mcc = form.getFieldValue('mсс') as any;
+        form.resetFields(['mcc']);
+        if (/\d{4}/.test(mcc)) setMссList(prev => [...prev, mcc]);
     };
 
     const renderMСС = () => {
         return (
             <>
-                {form.getFieldDecorator('Mсс', {
-                    rules: [
-                        {
-                            required: true,
-                            message: 'Please input a title',
-                        },
-                        {
-                            pattern: /\d/,
-                        },
-                    ],
-                })(
+                {form.getFieldDecorator('mсс', { rules: [{ pattern: /\d/ }] })(
                     <Input
                         addonAfter={
                             <span onClick={addMсс} style={{ cursor: 'pointer' }}>
@@ -141,12 +138,12 @@ const StrategiesCreateForm: React.FC<FormProps> = ({ form }) => {
                     {renderMСС()}
                 </Form.Item>
 
-                <Form.Item required label="Title">
+                <Form.Item required label="Название">
                     {form.getFieldDecorator('title')(
                         <Input placeholder={'Daily Ashan strategy'} />,
                     )}
                 </Form.Item>
-                <Form.Item label={'limit'}>
+                <Form.Item label={'Лимит'}>
                     <div className="inline-flex">
                         <Form.Item>
                             {form.getFieldDecorator('from')(<InputNumber placeholder={'Min'} />)}
@@ -158,18 +155,15 @@ const StrategiesCreateForm: React.FC<FormProps> = ({ form }) => {
                     </div>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 2 }}>
-                    <Title level={4}>Intervals calculation</Title>
+                    <Title level={4}>Правила начисления</Title>
                 </Form.Item>
                 {intervalsList}
                 <Form.Item wrapperCol={{ offset: 2 }}>
-                    <Button onClick={addInterval} type="dashed">
-                        Add interval <Icon type="plus" />
+                    <Button style={{ marginRight: 30 }} htmlType={'submit'} type="primary">
+                        Создать
                     </Button>
-                </Form.Item>
-
-                <Form.Item wrapperCol={{ offset: 2 }}>
-                    <Button htmlType={'submit'} type="primary">
-                        Create
+                    <Button onClick={addInterval} type="dashed">
+                        Добивить правило <Icon type="plus" />
                     </Button>
                 </Form.Item>
             </Form>
@@ -192,7 +186,7 @@ const Interval: React.FC<IntervalProps> = ({ key, onRemove, setIntervalValues, m
         <Form.Item key={key} className="inline-flex" wrapperCol={{ offset: 2 }}>
             <div className="inline-flex">
                 <Form.Item style={{ width: '200px' }}>
-                    Fixed amount
+                    Фиксированное
                     <Switch
                         onChange={() => setRatioMode(!ratioMode)}
                         checked={!ratioMode}
@@ -224,7 +218,7 @@ const Interval: React.FC<IntervalProps> = ({ key, onRemove, setIntervalValues, m
                     </span>
                 </Form.Item>
             </div>
-            <Form.Item label={ratioMode ? 'Bonus Presents' : 'Bonus Amount'}>
+            <Form.Item label={ratioMode ? 'Бонусы в процентах' : 'Фиксированное количество'}>
                 {ratioMode ? (
                     <Slider onChange={v => setIntervalValues({ ratio: Number(v) / 100 })} />
                 ) : (
@@ -232,6 +226,7 @@ const Interval: React.FC<IntervalProps> = ({ key, onRemove, setIntervalValues, m
                         onChange={v => setIntervalValues({ amount: v })}
                         placeholder={'42'}
                         style={{ width: '100%' }}
+                        min={0}
                     />
                 )}
             </Form.Item>

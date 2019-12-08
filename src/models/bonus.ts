@@ -1,5 +1,10 @@
+import { Transaction } from './transation';
+import { Strategy } from './strategy';
+
 export interface Bonus {
     id: string;
     amount: number;
-    create_time: string;
+    createTime: string;
+    transactions: Transaction[];
+    strategy: Strategy;
 }

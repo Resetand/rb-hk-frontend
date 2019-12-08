@@ -4,7 +4,7 @@ import Form, { FormComponentProps } from 'antd/lib/form';
 
 interface FormProps extends FormComponentProps {}
 
-const AggregateStrategiesCreateForm: React.FC = () => {
+const AggregateStrategiesCreateForm: React.FC<FormProps> = ({ form }) => {
     return <h1>AggregateStrategiesCreateForm</h1>;
 };
 

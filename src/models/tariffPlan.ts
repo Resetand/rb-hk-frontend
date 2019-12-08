@@ -1,7 +1,7 @@
 import { Strategy } from './strategy';
 
 export interface TariffPlan {
-    id: string;
+    uuid: string;
     title: string;
     strategies?: Strategy[];
 }

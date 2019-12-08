@@ -10,7 +10,3 @@ export interface Client {
 interface InstantStrategyType {
     ratio?: number;
 }
-
-/*
-
-*/

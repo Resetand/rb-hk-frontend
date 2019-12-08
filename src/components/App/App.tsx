@@ -8,6 +8,7 @@ import StrategiesCreatePage from '../StrategiesCreatePage/StrategiesCreatePage';
 import StrategiesListPage from '../StrategiesListPage/StrategiesListPage';
 import './App.scss';
 import TariffsPage from '../TariffsPage/TariffsPage';
+import TariffsCreatePage from '../TariffsCreatePage/TariffsCreatePage';
 
 const App: React.FC = () => {
     const renderError = () => (
@@ -31,7 +32,8 @@ const App: React.FC = () => {
                     <Route exact path="/strategies" component={StrategiesListPage} />
                     <Route path="/strategies/create" component={StrategiesCreatePage} />
                     <Route exact path="/client/:id" component={ClientPage} />
-                    <Route exact path="/client/:id" component={TariffsPage} />
+                    <Route exact path="/tariffs" component={TariffsPage} />
+                    <Route exact path="/tariffs/create" component={TariffsCreatePage} />
 
                     <Route children={renderError()} />
                 </Switch>
@@ -39,16 +41,5 @@ const App: React.FC = () => {
         </div>
     );
 };
-
-/*
-    icon?: React.ReactNode;
-    status?: ResultStatusType;
-    title?: React.ReactNode;
-    subTitle?: React.ReactNode;
-    extra?: React.ReactNode;
-    prefixCls?: string;
-    className?: string;
-    style?: React.CSSProperties;
-*/
 
 export default App;

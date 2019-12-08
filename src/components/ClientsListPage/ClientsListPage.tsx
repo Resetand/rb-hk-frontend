@@ -63,6 +63,7 @@ const ClientsListPage: React.FC = () => {
                         placeholder="input search text"
                         onSearch={value => alert(value)}
                         style={{ width: 300 }}
+                        disabled
                     />
                 </div>
                 <Table

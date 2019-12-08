@@ -5,7 +5,7 @@ import Title from 'antd/lib/typography/Title';
 import { block } from 'bem-cn';
 import * as React from 'react';
 import { fetchStrategies } from '../../api/routes';
-import { Strategy } from '../../models/strategy';
+import { Strategy, StrategyType } from '../../models/strategy';
 import './StrategiesListPage.scss';
 const b = block('StrategiesListPage');
 
@@ -28,7 +28,15 @@ const StrategiesListPage: React.FC = () => {
     const columns: ColumnProps<Strategy>[] = [
         {
             title: 'Название',
-            dataIndex: 'title',
+            render: (_, { title, type }) => (
+                <>
+                    <Icon
+                        style={{ width: 20, marginRight: 25 }}
+                        type={type === StrategyType.AGGREGATE_DATE ? 'schedule' : 'thunderbolt'}
+                    />
+                    {title}
+                </>
+            ),
         },
     ];
     return (
@@ -47,7 +55,12 @@ const StrategiesListPage: React.FC = () => {
                 </div>
 
                 <div className="list">
-                    <Table loading={loading} columns={columns} dataSource={dataSource}></Table>
+                    <Table
+                        onRowClick={json => alert(JSON.stringify(json, null, 4))}
+                        loading={loading}
+                        columns={columns}
+                        dataSource={dataSource}
+                    ></Table>
                 </div>
             </div>
         </div>
