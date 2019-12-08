@@ -37,34 +37,7 @@ const App: React.FC = () => {
                     <Route exact path="/client/:id" component={ClientPage} />
                     <Route exact path="/tariffs" component={TariffsPage} />
                     <Route exact path="/tariffs/create" component={TariffsFormPage} />
-                    {/* <Route exact path={'/success'}>
-                        <Result
-                            status={'success'}
-                            title="Успешно!"
-                            extra={[
-                                <Button href={'/'} type="primary" key="list">
-                                    Домой
-                                </Button>,
-                                <Button onClick={() => history.goBack()} key="create">
-                                    Создать еще
-                                </Button>,
-                            ]}
-                        />
-                    </Route>
-                    <Route exact path={'/error'}>
-                        <Result
-                            status={'error'}
-                            title="Что-то пошло не так!"
-                            extra={[
-                                <Button onClick={() => history.goBack()} type="primary" key="list">
-                                    Попробовать еще раз
-                                </Button>,
-                                <Button href={'/'} key="create">
-                                    На главную
-                                </Button>,
-                            ]}
-                        />
-                    </Route> */}
+
                     <Route children={renderError()} />
                 </Switch>
             </Router>

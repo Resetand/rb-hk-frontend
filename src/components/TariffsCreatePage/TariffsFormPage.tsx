@@ -18,6 +18,7 @@ const TariffsFormPage: React.FC = () => {
         e.preventDefault();
         const { uuid } = await createTariffPlan({ title });
         await bindStrategiesWithTariff(selectedStrategies, uuid);
+        history.goBack();
     };
     const [title, setTitle] = React.useState('');
     const [strategies, setStrategies] = React.useState<Strategy[]>([]);

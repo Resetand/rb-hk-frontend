@@ -5,7 +5,7 @@ import { block } from 'bem-cn';
 import { upperFirst } from 'lodash';
 import moment from 'moment';
 import * as React from 'react';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import {
     bindClientWithTariff,
     fetchClient,
@@ -22,6 +22,8 @@ const b = block('ClientPage');
 const ClientPage: React.FC = () => {
     const { id } = useParams();
     const [loading, setLoading] = React.useState(true);
+
+    const history = useHistory();
 
     const [client, setClient] = React.useState<Client>();
     const [bonuses, setBonuses] = React.useState<Bonus[]>();
@@ -101,12 +103,8 @@ const ClientPage: React.FC = () => {
             render: (_, { amount }) => <span style={{ color: 'green' }}>+ {amount}</span>,
         },
         {
-            title: 'Сумма',
-            render: (_, { transactions }) => (
-                <span style={{ color: 'green' }}>
-                    + {transactions.reduce((acc, cur) => cur.amount + acc, 0)}
-                </span>
-            ),
+            title: 'Сумма транзакции',
+            render: (_, { transactions }) => transactions.reduce((acc, cur) => cur.amount + acc, 0),
         },
         {
             title: 'Валюта',
@@ -136,7 +134,10 @@ const ClientPage: React.FC = () => {
                             {upperFirst(client.firstName)} {upperFirst(client.lastName)}
                         </Title>
                     </div>
-                    <Tag style={{ fontWeight: 'bold', padding: '3px 10px', cursor: 'pointer' }}>
+                    <Tag
+                        onClick={() => history.push('/tariffs')}
+                        style={{ fontWeight: 'bold', padding: '3px 10px', cursor: 'pointer' }}
+                    >
                         {client.tariffPlan.title}
                     </Tag>
                 </div>
