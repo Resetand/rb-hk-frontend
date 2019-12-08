@@ -7,6 +7,7 @@ import Header from '../Header/Header';
 import StrategiesCreatePage from '../StrategiesCreatePage/StrategiesCreatePage';
 import StrategiesListPage from '../StrategiesListPage/StrategiesListPage';
 import './App.scss';
+import TariffsPage from '../TariffsPage/TariffsPage';
 
 const App: React.FC = () => {
     const renderError = () => (
@@ -30,6 +31,7 @@ const App: React.FC = () => {
                     <Route exact path="/strategies" component={StrategiesListPage} />
                     <Route path="/strategies/create" component={StrategiesCreatePage} />
                     <Route exact path="/client/:id" component={ClientPage} />
+                    <Route exact path="/client/:id" component={TariffsPage} />
 
                     <Route children={renderError()} />
                 </Switch>

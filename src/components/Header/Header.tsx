@@ -31,6 +31,11 @@ const Header: React.FC = () => {
                                 <Link to="/strategies">Стратегии</Link>
                             </Button>
                         </li>
+                        <li className={b('menu-item')}>
+                            <Button type="link">
+                                <Link to="/tariffs">Тарифы</Link>
+                            </Button>
+                        </li>
                     </ul>
                 </nav>
             </div>
