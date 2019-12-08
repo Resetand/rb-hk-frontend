@@ -6,7 +6,7 @@ export interface Strategy {
 
 export interface InstantStrategy {
     intervals: InstantAmountInterval[];
-    mccList: string[];
+    mссList: string[];
     minBonus: number;
     maxBonus: number;
 }

@@ -27,7 +27,7 @@ const StrategiesListPage: React.FC = () => {
 
     const columns: ColumnProps<Strategy>[] = [
         {
-            title: 'Title',
+            title: 'Название',
             dataIndex: 'title',
         },
     ];
@@ -35,13 +35,13 @@ const StrategiesListPage: React.FC = () => {
         <div className={b()}>
             <div className="container">
                 <div className={b('head')}>
-                    <Title level={2}>Strategies</Title>
+                    <Title level={2}>Стратегии</Title>
                     <ButtonGroup>
                         <Button href="/strategies/create/instant">
-                            <Icon type="thunderbolt" /> New instant strategy
+                            <Icon type="thunderbolt" /> Создать мгновенную стратегию
                         </Button>
                         <Button href="/strategies/create/schedule">
-                            <Icon type="schedule" /> New schedule strategy
+                            <Icon type="schedule" /> Создать агрегационную стратегию
                         </Button>
                     </ButtonGroup>
                 </div>

@@ -28,7 +28,7 @@ const StrategiesCreateForm: React.FC<FormProps> = ({ form }) => {
                     title: values.title,
                     settings: {
                         intervals,
-                        mccList: MCCList,
+                        mссList,
                         maxBonus: values.max,
                         minBonus: values.min,
                     },
@@ -37,13 +37,9 @@ const StrategiesCreateForm: React.FC<FormProps> = ({ form }) => {
         });
     };
 
-    const [MCCList, setMCCList] = React.useState<string[]>([]);
-    const [intervals, setIntervals] = React.useState<AmountInterval[]>([
-        {
-            key: 0,
-        },
-    ]);
-    const [enableMCCList, setEnableMCClist] = React.useState(false);
+    const [mссList, setMссList] = React.useState<string[]>([]);
+    const [intervals, setIntervals] = React.useState<AmountInterval[]>([{ key: 0 }]);
+    const [enableMссList, setEnableMссList] = React.useState(false);
 
     const formItemLayout = {
         labelCol: {
@@ -57,18 +53,18 @@ const StrategiesCreateForm: React.FC<FormProps> = ({ form }) => {
     };
 
     const handleClose = (removed: string) => {
-        setMCCList(prev => prev.filter(item => item !== removed));
+        setMссList(prev => prev.filter(item => item !== removed));
     };
 
-    const addMCC = () => {
-        const mcc = form.getFieldValue('mcc') as any;
-        if (/\d{4}/.test(mcc)) setMCCList(prev => [...prev, mcc]);
+    const addMсс = () => {
+        const Mсс = form.getFieldValue('Mсс') as any;
+        if (/\d{4}/.test(Mсс)) setMссList(prev => [...prev, Mсс]);
     };
 
-    const renderMcc = () => {
+    const renderMСС = () => {
         return (
             <>
-                {form.getFieldDecorator('mcc', {
+                {form.getFieldDecorator('Mсс', {
                     rules: [
                         {
                             required: true,
@@ -81,16 +77,17 @@ const StrategiesCreateForm: React.FC<FormProps> = ({ form }) => {
                 })(
                     <Input
                         addonAfter={
-                            <span onClick={addMCC} style={{ cursor: 'pointer' }}>
+                            <span onClick={addMсс} style={{ cursor: 'pointer' }}>
                                 <Icon type="plus" />
                             </span>
                         }
+                        placeholder={'3522'}
                         style={{ maxWidth: 100 }}
                     />,
                 )}
                 <br />
 
-                {MCCList.map((item, index) => (
+                {mссList.map((item, index) => (
                     <Tag key={item} closable onClose={() => handleClose(item)}>
                         {item}
                     </Tag>
@@ -140,19 +137,9 @@ const StrategiesCreateForm: React.FC<FormProps> = ({ form }) => {
     return (
         <div className={b()}>
             <Form {...formItemLayout} onSubmit={handleSubmit}>
-                <Form.Item>
-                    Filter by MCC
-                    <Switch
-                        style={{ marginLeft: 10 }}
-                        checked={enableMCCList}
-                        onChange={() => setEnableMCClist(!enableMCCList)}
-                    />
+                <Form.Item wrapperCol={{ offset: 2 }} label={'MCC'}>
+                    {renderMСС()}
                 </Form.Item>
-                {enableMCCList && (
-                    <Form.Item wrapperCol={{ offset: 2 }} label={'MCC list'}>
-                        {renderMcc()}
-                    </Form.Item>
-                )}
 
                 <Form.Item required label="Title">
                     {form.getFieldDecorator('title')(

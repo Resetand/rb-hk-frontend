@@ -1,16 +1,16 @@
-export interface ClientDesc {
+import { TariffPlan } from './tariffPlan';
+
+export interface Client {
     uuid: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     tariffPlan: TariffPlan;
-}
-
-export interface Client {}
-
-export interface TariffPlan {
-    id: string;
-    title: string;
 }
 
 interface InstantStrategyType {
     ratio?: number;
 }
+
+/*
+
+*/

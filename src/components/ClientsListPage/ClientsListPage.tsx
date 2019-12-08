@@ -4,7 +4,7 @@ import Title from 'antd/lib/typography/Title';
 import { block } from 'bem-cn';
 import * as React from 'react';
 import { fetchClients } from '../../api/routes';
-import { ClientDesc } from '../../models/client';
+import { Client } from '../../models/client';
 import './ClientsListPage.scss';
 import Search from 'antd/lib/input/Search';
 import { useHistory } from 'react-router';
@@ -12,12 +12,12 @@ const b = block('ClientsListPage');
 
 const ClientsListPage: React.FC = () => {
     const [loading, setLoading] = React.useState(true);
-    const [clients, setClients] = React.useState<ClientDesc[]>([]);
+    const [clients, setClients] = React.useState<Client[]>([]);
 
     const history = useHistory();
 
     const tableSource = clients.map(client => ({
-        key: client.name,
+        key: client.uuid,
         ...client,
     }));
 
@@ -27,27 +27,23 @@ const ClientsListPage: React.FC = () => {
             .then(() => setLoading(false));
     }, []);
 
-    const columns: ColumnProps<ClientDesc>[] = [
+    const columns: ColumnProps<Client>[] = [
         {
-            title: 'First name',
+            title: 'Имя',
             dataIndex: 'firstName',
             key: 'firstName',
         },
         {
-            title: 'Last name',
+            title: 'Фамилия',
             dataIndex: 'lastName',
             key: 'lastName',
         },
         {
-            title: 'Bonuses',
+            title: 'Количество бонусов',
             render: () => Math.floor(Math.random() * 100),
         },
         {
-            title: 'Spent',
-            render: () => Math.floor(Math.random() * 10000),
-        },
-        {
-            title: 'Tariff Plan',
+            title: 'Тарифный план',
             dataIndex: 'tariffPlan',
             render: (_, { tariffPlan }) =>
                 tariffPlan && (
@@ -62,7 +58,7 @@ const ClientsListPage: React.FC = () => {
         <div className={b()}>
             <div className="container">
                 <div className={b('head')}>
-                    <Title level={2}>Clients</Title>
+                    <Title level={2}>Клиенты</Title>
                     <Search
                         placeholder="input search text"
                         onSearch={value => alert(value)}
@@ -70,6 +66,7 @@ const ClientsListPage: React.FC = () => {
                     />
                 </div>
                 <Table
+                    style={{ marginTop: '5%' }}
                     onRowClick={({ uuid }) => history.push(`/client/${uuid}`)}
                     dataSource={tableSource}
                     columns={columns}

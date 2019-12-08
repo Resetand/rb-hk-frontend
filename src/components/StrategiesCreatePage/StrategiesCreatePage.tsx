@@ -23,10 +23,7 @@ const StrategiesCreatePage: React.FC = () => {
                     title={'Create new strategy'}
                 >
                     <Paragraph style={{ maxWidth: '90%' }}>
-                        This is an instant strategy - its main task is to start immediately after
-                        the transaction, these are the rules by which the client will be credited
-                        with his bonuses, for example, for making a purchase in supermarkets more
-                        than 3000 rubles
+                        Мгновенная стратегия - это ...
                     </Paragraph>
                 </PageHeader>
 

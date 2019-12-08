@@ -5,4 +5,14 @@
         align-items: center;
         justify-content: center;
     }
+    &__head {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: w;
+    }
+    &__user-name {
+        display: flex;
+        align-items: center;
+    }
 }
