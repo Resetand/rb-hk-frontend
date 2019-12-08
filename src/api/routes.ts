@@ -37,3 +37,14 @@ export const fetchTariffs = async () =>
 export const bindClientWithTariff = (clientId: string, tariffId: string) => {
     request.put(`/clients/link?clientId=${clientId}&tariffPlanId=${tariffId}`);
 };
+
+export const createTariffPlan = (tariff: Omit<TariffPlan, 'uuid' | 'strategies'>) =>
+    request.post<TariffPlan>(`/tariffPlans`, tariff).then(({ data }) => data);
+
+export const bindStrategyWithTariff = (strategyId: string, tariffId: string) => {
+    request.put(`/strategies/link?strategyId=${strategyId}&tariffPlanId=${tariffId}`);
+};
+
+export const bindStrategiesWithTariff = (strategyIdList: string[], tariffId: string) => {
+    return Promise.all(strategyIdList.map(s => bindStrategyWithTariff(s, tariffId)));
+};

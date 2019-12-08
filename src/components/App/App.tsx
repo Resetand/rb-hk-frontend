@@ -6,7 +6,7 @@ import ClientsListPage from '../ClientsListPage/ClientsListPage';
 import Header from '../Header/Header';
 import StrategiesCreatePage from '../StrategiesCreatePage/StrategiesCreatePage';
 import StrategiesListPage from '../StrategiesListPage/StrategiesListPage';
-import TariffsCreatePage from '../TariffsCreatePage/TariffsCreatePage';
+import TariffsFormPage from '../TariffsCreatePage/TariffsFormPage';
 import TariffsPage from '../TariffsPage/TariffsPage';
 import './App.scss';
 
@@ -36,7 +36,7 @@ const App: React.FC = () => {
                     <Route path="/strategies/create" component={StrategiesCreatePage} />
                     <Route exact path="/client/:id" component={ClientPage} />
                     <Route exact path="/tariffs" component={TariffsPage} />
-                    <Route exact path="/tariffs/create" component={TariffsCreatePage} />
+                    <Route exact path="/tariffs/create" component={TariffsFormPage} />
                     {/* <Route exact path={'/success'}>
                         <Result
                             status={'success'}

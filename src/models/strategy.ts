@@ -1,4 +1,5 @@
 export interface Strategy {
+    uuid?: string;
     type: StrategyType;
     title: string;
     settings: InstantStrategy | AggregateStrategy;
