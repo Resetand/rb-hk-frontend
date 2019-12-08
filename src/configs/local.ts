@@ -2,7 +2,7 @@ import { OverrideConfig } from '.';
 
 const localConfig: OverrideConfig = {
     api: {
-        url: 'http://41b2cf60.ngrok.io',
+        url: 'http://5d021f13.ngrok.io',
     },
 };
 

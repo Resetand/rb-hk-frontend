@@ -1,5 +1,5 @@
 export default {
     api: {
-        url: 'http://localhost:8080',
+        url: 'http://5d021f13.ngrok.io',
     },
 };
